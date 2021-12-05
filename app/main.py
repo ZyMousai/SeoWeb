@@ -1,7 +1,8 @@
 # from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 
+from sql_models.db_config import SessionLocal
 from voluum_app.view import volumm_api
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,9 +33,17 @@ async def read_root():
     return {"Hello": "World"}
 
 
-# @app.get("/items/{item_id}")
-# async def read_item(item_id: int, q: Optional[str] = None):
-#     return {"item_id": item_id, "q": q}
+@app.middleware("http")
+async def db_session_middleware(request: Request, call_next):
+    try:
+        request.state.db = SessionLocal()
+        response = await call_next(request)
+    except Exception as e:
+        response = Response(f"Internal server error:{e}", status_code=500)
+    finally:
+        request.state.db.close()
+    return response
+
 
 # ==================分割线==================
 # 定时任务
