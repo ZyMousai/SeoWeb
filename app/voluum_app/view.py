@@ -68,7 +68,7 @@ async def get_campaign_site_url(campaign_id: str, request: Request, db=Depends(d
             site_id_list.append(x)
         else:
             pass
-    site_id = random.choice(site_id_list[:10])
+    site_id = random.choice(site_id_list[4:10])
 
     # 3. 根据campaigns-id获取url
     # 通过主id拿到从id，查询主id最近的site，但是更换的链接是从id
