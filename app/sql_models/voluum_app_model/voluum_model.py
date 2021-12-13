@@ -22,10 +22,10 @@ class DBCampaignMapping(Base):
     __tablename__ = 'campaign_mapping'
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    m_id = Column(String(188), unique=True)
-    m_name = Column(String(188))
+    m_id = Column(String(188))
+    m_name = Column(String(588))
     s_id = Column(String(188))
-    s_name = Column(String(188))
+    s_name = Column(String(588))
 
     @staticmethod
     async def get_all(db: Session):
@@ -46,8 +46,8 @@ class DBCampaignMapping(Base):
         return {'id': cam_map_id}
 
     @staticmethod
-    async def get_one(db: Session, m_id: str):
-        return db.query(DBCampaignMapping).filter(DBCampaignMapping.m_id == m_id).one()
+    async def get_one(db: Session, m_id: str, s_id: str):
+        return db.query(DBCampaignMapping).filter(DBCampaignMapping.m_id == m_id, DBCampaignMapping.s_id == s_id).one()
 
 
 if __name__ == '__main__':

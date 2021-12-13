@@ -41,8 +41,8 @@ async def get_campaign_supplement(campaign_id: str, request: Request):
     return response_body
 
 
-@volumm_api.get('/campaign_site_url/{campaign_id}')
-async def get_campaign_site_url(campaign_id: str, request: Request, db=Depends(db)):
+@volumm_api.get('/campaign_site_url/{m_id}/{s_id}')
+async def get_campaign_site_url(m_id: str, s_id: str, request: Request, db=Depends(db)):
     """生成携带site-id的campaign_url"""
     response_body = {
         'ret_code': 200,
@@ -53,7 +53,7 @@ async def get_campaign_site_url(campaign_id: str, request: Request, db=Depends(d
     # 1. 拿到数据 可以获取到此campaign_id最近的site-id
     ax = VoluumSpider()
     ax.get_token()
-    body = ax.get_one_reports(campaign_id)['body']
+    body = ax.get_one_reports(m_id)['body']
 
     # 2. 根据 uniqueClicks 进行排序获取 site-id
     c_c = {i['customVariable2']: i['uniqueClicks'] for i in body}
@@ -76,7 +76,7 @@ async def get_campaign_site_url(campaign_id: str, request: Request, db=Depends(d
 
     # 3. 根据campaigns-id获取url
     # 通过主id拿到从id，查询主id最近的site，但是更换的链接是从id
-    cam_m_s_mapping = await DBCampaignMapping.get_one(db, campaign_id)
+    cam_m_s_mapping = await DBCampaignMapping.get_one(db, m_id, s_id)
     mongo = MongoClient()
     # query_ = mongo.select('voluum_campaigns', **{'id': campaign_id})[0]
     query_ = mongo.select('voluum_campaigns', **{'id': cam_m_s_mapping.s_id})[0]
