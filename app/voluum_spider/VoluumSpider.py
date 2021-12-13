@@ -73,7 +73,7 @@ class VoluumSpider(object):
         return body
 
     def get_one_reports(self, campaign_id):
-        from_time = (datetime.datetime.now() - datetime.timedelta(days=3)).strftime("%Y-%m-%dT00:00:00Z")
+        from_time = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y-%m-%dT00:00:00Z")
         to_time = datetime.datetime.now().strftime("%Y-%m-%dT00:00:00Z")
         url = self.base_url + '/report' + f'?from={from_time}&to={to_time}&tz=America/New_York&conversionTimeMode=VISIT&currency=USD&sort=visits&direction=desc&column=customVariable2&column=assocId&column=visits&column=uniqueVisits&column=clicks&column=uniqueClicks&column=conversions&column=revenue&column=cost&column=costSources&column=profit&column=cpv&column=ictr&column=ctr&column=cr&column=cv&column=roi&column=epv&column=epc&column=ap&column=errors&column=rpm&column=ecpm&column=ecpc&column=ecpa&column=transitivePause&column=actions&column=type&column=readOnly&column=deleted&column=campaignType&column=isOptimizationEnabled&column=externalCampaignId&column=isDsp&groupBy=custom-variable-2&offset=0&limit=1000&include=ACTIVE&filter1=campaign&filter1Value={campaign_id}'
 
