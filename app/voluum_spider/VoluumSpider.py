@@ -7,8 +7,8 @@ from public_p.mongo_c.MongoClient import MongoClient
 
 
 class VoluumSpider(object):
-    key_id = "78e6e4dd-bd0a-4f17-aaa4-1325f7a1c7a9"
-    key = "fIPJTckDmph2socvrHSbMZa7L-AZXzvt2jap"
+    key_id = "b64ada52-e7af-4230-9be4-7fd423180102"
+    key = "9umhswdiD2ybINGsM1T2Xu2cwLejKN3nZmyw"
     base_url = "https://api.voluum.com"
 
     def __init__(self):
