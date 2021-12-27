@@ -56,7 +56,7 @@ async def get_campaign_site_url(m_id: str, s_id: str, request: Request, db=Depen
     body = ax.get_one_reports(m_id)['body']
 
     # 2. 根据 uniqueClicks 进行排序获取 site-id
-    c_c = {i['customVariable2']: i['uniqueClicks'] for i in body}
+    c_c = {i['customVariable2']: i['uniqueClicks'] for i in body if i['customVariable2'].isdigit()}
     c_c_sort = {k: v for k, v in sorted(c_c.items(), key=lambda item: item[1], reverse=True)}
 
     site_id_list = []
